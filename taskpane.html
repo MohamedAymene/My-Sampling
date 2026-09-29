@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sampling Calculator — Internal Test Build</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAFQElEQVR4nN2WW3NTVRTH19r75CRpkuZ2QtOm17SFimDlMgoUQRCwMozD+KTjdUA+gG9+EN958MEZxxmH8TJyUZQKTrko1GJLwdJbWtJce9rk5OTss5cPAWyCqZeRF/bLedjn/H97rfVfax88Gn8PHudij1X9SQbg/ac31NB/oO/oBwf8Td7/BlD+QpwhSeIO1r+/r3dbly/gicaihVzp2oXrvqBX2rJcssoFq5AtWUVB9C8BFfXGiGffGzujXesiEa0j3q41hYOhwMzstMvtJAJAICIp5d3L88WMiQyBgOqglEfVA1Hf4RMvas3a+r6eWEdLZUtbF3a73WbJRGQAhAzNomXkTUAguVYU1TUgcHocg8f2ev1eYYpIVAMA27aJqDHQGG1tEpZgHAGQKSw9lScbgCDSEdr31vPIsbLWAhDRjle3hJoCoiwKK4Whc5dKJZNzbgsbAFo7W4QQAMAVZq6U9YUCADRGPAff2f3M7o0Dr20lIqjVrwZEe7TeLV3GigmIDlVdXloe/uFK2SxzhQNAR3c745wkAYPM7JIU5Am6D5/Y5wt4llL65t19nf0xkoQM6wK2v7zZ7XEpKgcgYQlFUbLp3PDQFWEJAGhpa27wuInIKlnZad3pUV95f29A85uGxRRml+X2Q5uZglBdkSrAz2dHL5++nk3mGWcNPpeiKqpTXZxPXx66apWtUCTYGo+hAqm7eUQ2eHyP1hI2jTLjDACFJSKxcHPPuho7VblofiI1P5EaZje01mDbhubW9VEtFvJrvmw2d3NkjNnK7eHpe3NJU7cGj++JdUeNFfNhQqQkRGzb0JwYT9YFVGwKEtIzufRM7pezv/nCnmg80t3fMTOeOHNyiCEHAMXJ3V6XKNvIqr6Vkhq12oavAhCR4uaMISAgIkkqLBcnrk7euTEFEhhWtlCY9q8/ju97fZc0SXGwB8cHktLb6AGE1WWoBgB1bGtyeZ22kBVHV2ytqHxudDE7tQwPnN7SEQ0E/fdWkmVTIgJXOAIiMiklAtIqQnWKCG2LOOdk0+qWkQK0zoCeLAhDAkCwxX/swzd9fm8uk08n06lkOp9dMoolpjA9u7xWkQGgpJs+rQFqGoYIGBx4d2DT5k2Tt+5OTEyMXBsd2L8jGA4Ew4HejT3FQjGdzOi6PnJhvEawdlzryQI8OloQyJb7j+wdGHzuyNuH3B7Xmc+/vXR+GACEJYiowdPQHm/b9OzTzT2R1i2RugBENHJmIW9wB3sYKDI0DbP7qXhPX9y2pcfjCYQCqks9e+q7qxd/VhwKEAghiGh2cm4hsaBwpS6gMnTvjWdqApBELxzchYgkpepUo7EmYQmX2/n1Z2dGro4iQwQEgO9PDxWXjcTNVP0UEQBCMWvOj6ccLg6AiFg2rfZ42/pNPUT3K9/WFZNSIqLqdJz65KuxkVtc4ee+OD89OZO8nbUMsVrykRuNABAykzrjGO0NIzCrbA28tENRFJLEOAOAlvZm1alKSQDIGPvy028mRm+P35zIJZYX7+Tud2tdAAAQIGLq9pK5Ymnd/viGzq07+4lIkgQJgBCOhBr9Pn1pmXPGGBOWuHljLJvQJy8nENccdn8iiBBRXyj+fjHhYGo+uwQEnHOucM65y+1qaW+2TAuROZwK47hwK33np9lKDf+mD1YzAIFzPjszd/Kjj8NaKBQOuhpcRGQUjORC0u1z2ZadSeQSY6litoSP3jVrAyq5IglT1xZyUX0huMhVprocJMkqC7KgkDOyc7qRNwGgZv78YwAASSpkjELGWPu1eurwBP86/n/rD1RBkL9C0v5GAAAAAElFTkSuQmCC">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F5F2EA;
+    --panel: #FFFDF8;
+    --ink: #1E2A38;
+    --ink-soft: #4B5A6B;
+    --green: #2E6B55;
+    --green-soft: #E4EEE9;
+    --rust: #9C5430;
+    --rust-soft: #F3E5DA;
+    --rule: #C9C2AE;
+    --rule-soft: #E4DFD1;
+    --focus: #2E6B55;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #161E1B;
+      --panel: #1E2823;
+      --ink: #EDE8DC;
+      --ink-soft: #AEB8B0;
+      --green: #5CB395;
+      --green-soft: #223530;
+      --rust: #E0966A;
+      --rust-soft: #3A2A20;
+      --rule: #3C463F;
+      --rule-soft: #2A332D;
+      --focus: #5CB395;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #161E1B; --panel: #1E2823; --ink: #EDE8DC; --ink-soft: #AEB8B0;
+    --green: #5CB395; --green-soft: #223530; --rust: #E0966A; --rust-soft: #3A2A20;
+    --rule: #3C463F; --rule-soft: #2A332D; --focus: #5CB395;
+  }
+  :root {
+    --t-purple-dark: #250C2A;
+    --t-purple: #502260;
+    --t-magenta: #BE398C;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', 'SF Mono', Consolas, monospace;
+    font-size: 14px;
+    line-height: 1.55;
+    min-height: 100vh;
+  }
+  h1, h2, h3 { font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif; font-weight: 600; margin: 0 0 .3em; color: var(--ink); }
+  h1 { font-size: 1.5rem; letter-spacing: .01em; }
+  h2 { font-size: 1.15rem; }
+  h3 { font-size: .95rem; margin-bottom: .5em; }
+  p { margin: 0 0 .8em; }
+  a { color: var(--green); }
+  button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
+    outline: 2px solid var(--focus); outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+  .brandbar {
+    background: linear-gradient(120deg, var(--t-purple-dark), var(--t-purple) 55%, var(--t-magenta));
+    padding: .65rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+  }
+  .brandbar img { height: 24px; display: block; }
+  .brandbar .firm-name {
+    font-family: 'Source Serif 4', Georgia, serif;
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: .02em;
+    padding-left: .6rem;
+    border-left: 1px solid rgba(255,255,255,.4);
+  }
+
+  header {
+    border-bottom: 1px solid var(--rule);
+    padding: 1.6rem 1.5rem 1.2rem;
+    max-width: 1040px; margin: 0 auto;
+  }
+  header .kicker { color: var(--ink-soft); font-size: .78rem; margin-bottom: .2rem; }
+  header p.lede { color: var(--ink-soft); max-width: 62ch; }
+
+  nav.tabs {
+    max-width: 1040px; margin: 0 auto; display: flex; gap: .3rem;
+    padding: 0 1.5rem; margin-top: 1rem;
+  }
+  nav.tabs button {
+    font-family: 'Source Serif 4', serif; font-size: .92rem; font-weight: 600;
+    background: var(--rule-soft); color: var(--ink-soft); border: 1px solid var(--rule);
+    border-bottom: none; padding: .55rem 1.1rem .5rem; border-radius: 6px 6px 0 0;
+    cursor: pointer; position: relative; top: 1px;
+  }
+  nav.tabs button.active { background: var(--panel); color: var(--ink); border-bottom: 1px solid var(--panel); }
+  nav.tabs button .idx { color: var(--green); margin-right: .4em; }
+
+  main { max-width: 1040px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+  section.panel {
+    display: none; border: 1px solid var(--rule); border-top: none;
+    background: var(--panel); padding: 1.6rem;
+    background-image: repeating-linear-gradient(var(--panel) 0 27px, var(--rule-soft) 27px 28px);
+    background-attachment: local;
+  }
+  section.panel.active { display: block; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; }
+  @media (max-width: 760px) { .grid2 { grid-template-columns: 1fr; } }
+
+  fieldset { border: 1px solid var(--rule); border-radius: 6px; padding: 1rem 1.1rem 1.1rem; margin: 0 0 1.1rem; background: var(--paper); }
+  legend { font-family: 'Source Serif 4', serif; font-weight: 600; padding: 0 .4em; color: var(--ink); }
+  label { display: block; font-size: .82rem; color: var(--ink-soft); margin: .7rem 0 .25rem; }
+  label:first-of-type { margin-top: 0; }
+  input[type=number], input[type=text], select, textarea {
+    width: 100%; font-family: inherit; font-size: .92rem; color: var(--ink);
+    background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+    padding: .45rem .55rem;
+  }
+  textarea { min-height: 6rem; resize: vertical; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+  @media (max-width: 760px) { .row2 { grid-template-columns: 1fr; } }
+  .radiorow { display: flex; flex-wrap: wrap; gap: .6rem 1.2rem; margin: .4rem 0 .2rem; }
+  .radiorow label { display: flex; align-items: center; gap: .4rem; margin: 0; color: var(--ink); font-size: .85rem; }
+  .hint { font-size: .76rem; color: var(--ink-soft); margin-top: .2rem; }
+
+  button.action {
+    font-family: 'Source Serif 4', serif; font-weight: 600; font-size: .92rem;
+    background: var(--green); color: var(--paper); border: none; border-radius: 5px;
+    padding: .6rem 1.2rem; cursor: pointer; margin-top: .4rem;
+  }
+  button.action:hover { filter: brightness(1.08); }
+  button.ghost {
+    font-family: inherit; font-size: .8rem; background: transparent; color: var(--ink-soft);
+    border: 1px solid var(--rule); border-radius: 5px; padding: .4rem .8rem; cursor: pointer;
+  }
+  button.ghost:hover { color: var(--ink); border-color: var(--ink-soft); }
+
+  .results { min-height: 100%; }
+  .badge { display: inline-block; font-size: .78rem; padding: .2rem .55rem; border-radius: 3px; background: var(--green-soft); color: var(--green); border: 1px solid var(--green); margin-bottom: .6rem; }
+  .badge.warn { background: var(--rust-soft); color: var(--rust); border-color: var(--rust); }
+
+  table { width: 100%; border-collapse: collapse; font-size: .82rem; margin: .6rem 0 1rem; }
+  th, td { border: 1px solid var(--rule); padding: .35rem .5rem; text-align: right; font-variant-numeric: tabular-nums; }
+  th:first-child, td:first-child { text-align: left; }
+  th { background: var(--rule-soft); color: var(--ink-soft); font-weight: 600; }
+  td.hit { background: var(--green-soft); color: var(--green); font-weight: 600; }
+  td.rowhead { background: var(--rule-soft); font-weight: 600; }
+
+  .stat { display: flex; justify-content: space-between; padding: .35rem 0; border-bottom: 1px dashed var(--rule); font-size: .87rem; }
+  .stat b { color: var(--ink); }
+  .stat span.k { color: var(--ink-soft); }
+
+  .doctext { white-space: pre-wrap; background: var(--paper); border: 1px solid var(--rule); border-radius: 5px; padding: .8rem; font-size: .82rem; margin: .6rem 0; }
+  .btnrow { display: flex; gap: .6rem; margin-top: .6rem; flex-wrap: wrap; }
+
+  .logentry { border: 1px solid var(--rule); border-radius: 6px; padding: .8rem 1rem; margin-bottom: .8rem; background: var(--paper); }
+  .logentry h4 { font-family: 'Source Serif 4', serif; font-size: .92rem; margin: 0 0 .3rem; }
+  .logentry time { font-size: .72rem; color: var(--ink-soft); }
+  .empty { color: var(--ink-soft); font-style: italic; padding: 1rem 0; }
+
+  footer.note { max-width: 1040px; margin: 1.2rem auto 0; padding: 0 1.5rem; color: var(--ink-soft); font-size: .76rem; }
+</style>
+</head>
+<body>
+
+<div class="brandbar">
+  
+  <span class="firm-name">My Sampling</span>
+</div>
+
+<header>
+  <div class="kicker">Internal test build — not for distribution</div>
+  <h1>Audit Sampling Calculator</h1>
+  <p class="lede">Determines sample size (Tests of Details and Tests of Controls), selects items, and generates documentation text — every figure is traced to its source table, not guessed.</p>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="tod"><span class="idx">A</span>Tests of Details</button>
+  <button class="tab-btn" data-tab="toc"><span class="idx">B</span>Tests of Controls</button>
+  <button class="tab-btn" data-tab="log"><span class="idx">C</span>Documentation Log</button>
+</nav>
+
+<main>
+
+  <fieldset style="margin-bottom:1.2rem;">
+    <legend>Engagement details (applies to all tests and exports)</legend>
+    <div class="row2">
+      <div>
+        <label for="eng-client">Client / Engagement</label>
+        <input type="text" id="eng-client" placeholder="E.g.: Sample Client Ltd — FY2027">
+        <label for="eng-auditor">Auditor in charge</label>
+        <input type="text" id="eng-auditor" placeholder="E.g.: Jane Smith (Senior)">
+      </div>
+      <div>
+        <label for="eng-om">Overall Materiality (OM)</label>
+        <input type="text" inputmode="numeric" id="eng-om" placeholder="E.g.: 400,000">
+        <label for="eng-pm">Performance Materiality (PM)</label>
+        <input type="text" inputmode="numeric" id="eng-pm" placeholder="E.g.: 300,000">
+      </div>
+    </div>
+    <div style="border-top:1px dashed var(--rule); margin-top:1rem; padding-top:.8rem;">
+      <label for="eng-prepared-by">Prepared by (your name — saved on this device only, fills in automatically next time)</label>
+      <input type="text" id="eng-prepared-by" placeholder="E.g.: John Doe (Junior)" style="max-width:340px;">
+    </div>
+  </fieldset>
+
+  <!-- ===================== TAB A — TESTS OF DETAILS ===================== -->
+  <section class="panel active" id="tod">
+    <div class="grid2">
+      <div>
+        <fieldset>
+          <legend>1 — Sample size</legend>
+
+          <label for="tod-label">Label (e.g. "Accounts Receivable — Existence")</label>
+          <input type="text" id="tod-label" placeholder="E.g.: Accounts Receivable — Test of Details">
+
+          <label for="tod-population">Population tested (value remaining after targeted/stratified items)</label>
+          <input type="text" inputmode="numeric" id="tod-population" placeholder="E.g.: 2,000,000">
+
+          <label for="tod-tm">Tolerable misstatement (TM)</label>
+          <input type="text" inputmode="numeric" id="tod-tm" placeholder="E.g.: 300,000">
+          <div class="hint">TM = performance materiality in principle (65–100% of PM per judgement, §7.4).</div>
+
+          <div class="row2">
+            <div>
+              <label for="tod-ir">Inherent risk (IR)</label>
+              <select id="tod-ir"><option value="H">High</option><option value="M" selected>Medium</option><option value="L">Low</option></select>
+            </div>
+            <div>
+              <label style="display:flex;align-items:center;gap:.4rem;margin-top:1.55rem;">
+                <input type="checkbox" id="tod-controls-tested" checked style="width:auto;"> Controls tested this year?
+              </label>
+            </div>
+          </div>
+          <div id="tod-cr-wrap">
+            <label for="tod-cr">Control risk (CR)</label>
+            <select id="tod-cr"><option value="H">High</option><option value="M" selected>Medium</option><option value="L">Low</option></select>
+          </div>
+
+          <label for="tod-ratio">Ratio of expected error to TM (%)</label>
+          <select id="tod-ratio">
+            <option value="0">0%</option>
+            <option value="5" selected>5% (recommended starting point, §7.5)</option>
+            <option value="10">10%</option>
+            <option value="20">20%</option>
+            <option value="40">40%</option>
+          </select>
+
+          <label>Planned selection method</label>
+          <div class="radiorow">
+            <label><input type="radio" name="tod-method" value="statistical" checked> Statistical / MUS (Appx. 4)</label>
+            <label><input type="radio" name="tod-method" value="haphazard"> Haphazard (Appx. 5)</label>
+          </div>
+
+          <button class="action" id="tod-calc-btn">Calculate</button>
+        </fieldset>
+      </div>
+
+      <div class="results" id="tod-results">
+        <fieldset>
+          <legend>Result</legend>
+          <p class="empty">Enter the parameters, then click "Calculate".</p>
+        </fieldset>
+      </div>
+    </div>
+
+    <fieldset>
+      <legend>2 — Item selection</legend>
+      <p class="hint">Paste the population, import a .csv/.xlsx file, or simply enter a population size for a random/systematic selection without values. One row per item: <code>ID, description, value</code> (value is only required for MUS).</p>
+      <button class="ghost" id="tod-example-btn" style="margin-bottom:1rem;">Load a worked example (population + targeted testing)</button>
+
+      <h3 style="font-size:.85rem;color:var(--ink-soft);margin:0 0 .5rem;">2a · Population</h3>
+      <div class="row2">
+        <div>
+          <label for="tod-pop-paste">Population (pasted) — optional</label>
+          <textarea id="tod-pop-paste" placeholder="INV-1001, Customer invoice A, 12500&#10;INV-1002, Customer invoice B, 3200&#10;..."></textarea>
+          <label for="tod-pop-file">— or — import a file (.csv, .xlsx)</label>
+          <input type="file" id="tod-pop-file" accept=".csv,.txt,.xlsx,.xls">
+          <div id="tod-pop-file-status" class="hint"></div>
+          <button class="ghost excel-only" id="tod-excel-btn" style="display:none;margin-top:.5rem;">Get from selected Excel range</button>
+          <div id="tod-excel-status" class="hint excel-only" style="display:none;"></div>
+        </div>
+        <div>
+          <label for="tod-pop-count">— or — population size (number of items)</label>
+          <input type="number" id="tod-pop-count" placeholder="E.g.: 480">
+          <label>Selection method</label>
+          <div class="radiorow" style="flex-direction:column;gap:.5rem;">
+            <label><input type="radio" name="tod-sel-method" value="random" checked> Random</label>
+            <label><input type="radio" name="tod-sel-method" value="systematic"> Systematic</label>
+            <label><input type="radio" name="tod-sel-method" value="mus"> Monetary Unit Sampling (requires a value column)</label>
+          </div>
+          <button class="action" id="tod-select-btn">Generate sample</button>
+        </div>
+      </div>
+
+      <h3 style="font-size:.85rem;color:var(--ink-soft);margin:1.3rem 0 .5rem;">2b · Targeted / specific items (optional, §5)</h3>
+      <div style="border:1px dashed var(--rule); border-radius:5px; padding:.8rem 1rem; margin-bottom:1.1rem;">
+        <p class="hint" style="margin-top:0;">Requires the population above to be filled in first — each ID below is looked up there.</p>
+        <label for="tod-target-criteria">Targeting criteria / rationale — document why these items were selected for 100% testing</label>
+        <input type="text" id="tod-target-criteria" placeholder="E.g.: Items ≥ $100,000 (>5% of PM), or related-party transactions">
+        <label for="tod-target-items">Targeted items — one per line: <code>ID, justification</code> (or paste full rows from the population above — everything after the ID becomes the justification)</label>
+        <textarea id="tod-target-items" placeholder="INV-1002, Individually significant — exceeds threshold&#10;INV-1005, Related party transaction"></textarea>
+        <button class="ghost" id="tod-target-btn" style="margin-top:.5rem;">Apply targeting</button>
+        <div id="tod-target-out"></div>
+      </div>
+
+      <div id="tod-selection-out"></div>
+      <button class="ghost excel-only" id="tod-write-btn" style="display:none;margin-top:.6rem;">Write sample to new sheet</button>
+      <div id="tod-write-status" class="hint excel-only" style="display:none;"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>3 — Documentation (§8)</legend>
+      <label for="tod-source">Population source (if different from the general ledger)</label>
+      <input type="text" id="tod-source" placeholder="E.g.: General ledger — Sales module, export dated 30-Nov-2026">
+      <button class="action" id="tod-doc-btn">Generate text</button>
+      <div id="tod-doc-out"></div>
+    </fieldset>
+  </section>
+
+  <!-- ===================== TAB B — TESTS OF CONTROLS ===================== -->
+  <section class="panel" id="toc">
+    <div class="grid2">
+      <div>
+        <fieldset>
+          <legend>1 — Minimum size (Table 1)</legend>
+
+          <label for="toc-label">Label (e.g. "Authorization of supplier payments")</label>
+          <input type="text" id="toc-label" placeholder="E.g.: Payment authorization">
+
+          <label for="toc-freq">Nature and frequency of the control</label>
+          <select id="toc-freq">
+            <option value="daily">Manual, daily / multiple times per day</option>
+            <option value="weekly">Manual, weekly</option>
+            <option value="monthly">Manual, monthly</option>
+            <option value="quarterly">Manual, quarterly</option>
+            <option value="annual">Manual, annual</option>
+            <option value="automated">Automated application control (effective ITGCs)</option>
+            <option value="other">Other frequency (50–250 occurrences/year)</option>
+          </select>
+          <div id="toc-other-wrap" style="display:none;">
+            <label for="toc-occurrences">Number of occurrences in the year</label>
+            <input type="number" id="toc-occurrences" placeholder="E.g.: 150">
+            <div class="hint">Professional judgement: ~10% of occurrences (§6.3, note **).</div>
+          </div>
+
+          <button class="action" id="toc-calc-btn">Determine minimum size</button>
+        </fieldset>
+
+        <fieldset>
+          <legend>Evaluation of results</legend>
+          <label for="toc-fail1">Failures found — initial sample</label>
+          <input type="number" id="toc-fail1" min="0" value="0">
+          <div id="toc-ext-wrap" style="display:none;">
+            <label for="toc-fail2">Failures found — extension sample</label>
+            <input type="number" id="toc-fail2" min="0" value="0">
+          </div>
+          <button class="action" id="toc-eval-btn">Evaluate</button>
+          <div id="toc-eval-out"></div>
+        </fieldset>
+      </div>
+
+      <div class="results" id="toc-results">
+        <fieldset>
+          <legend>Result</legend>
+          <p class="empty">Enter the parameters, then click "Determine minimum size".</p>
+        </fieldset>
+      </div>
+    </div>
+
+    <fieldset>
+      <legend>2 — Item selection</legend>
+      <p class="hint">The sample should be spread across the whole period of desired reliance. Paste the occurrences (e.g. dates), import a .csv/.xlsx file, or enter a population size.</p>
+      <div class="row2">
+        <div>
+          <label for="toc-pop-paste">Population (pasted) — optional</label>
+          <textarea id="toc-pop-paste" placeholder="02-Jan-2026&#10;03-Jan-2026&#10;..."></textarea>
+          <label for="toc-pop-file">— or — import a file (.csv, .xlsx)</label>
+          <input type="file" id="toc-pop-file" accept=".csv,.txt,.xlsx,.xls">
+          <div id="toc-pop-file-status" class="hint"></div>
+          <button class="ghost excel-only" id="toc-excel-btn" style="display:none;margin-top:.5rem;">Get from selected Excel range</button>
+          <div id="toc-excel-status" class="hint excel-only" style="display:none;"></div>
+        </div>
+        <div>
+          <label for="toc-pop-count">— or — population size (number of occurrences)</label>
+          <input type="number" id="toc-pop-count" placeholder="E.g.: 260">
+          <label>Selection method</label>
+          <div class="radiorow" style="flex-direction:column;gap:.5rem;">
+            <label><input type="radio" name="toc-sel-method" value="random" checked> Random</label>
+            <label><input type="radio" name="toc-sel-method" value="systematic"> Systematic</label>
+          </div>
+          <button class="action" id="toc-select-btn">Generate sample</button>
+        </div>
+      </div>
+      <div id="toc-selection-out"></div>
+      <button class="ghost excel-only" id="toc-write-btn" style="display:none;margin-top:.6rem;">Write sample to new sheet</button>
+      <div id="toc-write-status" class="hint excel-only" style="display:none;"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>3 — Documentation (§8)</legend>
+      <label for="toc-source">Population source</label>
+      <input type="text" id="toc-source" placeholder="E.g.: Supplier payments journal FY2026">
+      <button class="action" id="toc-doc-btn">Generate text</button>
+      <div id="toc-doc-out"></div>
+    </fieldset>
+  </section>
+
+  <!-- ===================== TAB C — LOG ===================== -->
+  <section class="panel" id="log">
+    <fieldset>
+      <legend>Documentation Log</legend>
+      <p class="hint">Every entry added from tabs A and B accumulates here (kept locally in this browser). Copy everything at the end of the engagement to paste into the working paper.</p>
+      <div class="btnrow">
+        <button class="ghost" id="log-copy-btn">Copy all</button>
+        <button class="action" id="log-pdf-btn">Save as PDF</button>
+        <button class="action" id="log-xlsx-btn">Export to Excel</button>
+        <button class="ghost" id="log-clear-btn">Clear log</button>
+      </div>
+      <div id="log-export-status" class="hint" style="margin-top:.5rem;"></div>
+      <div id="log-list" style="margin-top:1rem;"></div>
+    </fieldset>
+  </section>
+
+</main>
+
+<footer class="note">Calculation tool — suggested sizes remain a starting point; the final size retained and its justification are a matter of the auditor's professional judgement (§7.6, §8).</footer>
+
+<script src="xlsx.full.min.js"></script>
+<script src="jspdf.umd.min.js"></script>
+<script src="jspdf.plugin.autotable.min.js"></script>
+<script src="exceljs.min.js"></script>
+<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  // ============ CORE ENGINE (test build) ============
+  const TM_THRESHOLDS = [50, 30, 10, 8, 6, 5, 4, 3, 2, 1, 0.5];
+
+  const APPENDIX_4_STATISTICAL = {
+    0:  { H: [10,14,37,44,58,69,84,111,165,326,648], M: [7,10,23,28,37,42,52,69,101,198,392], L: [6,7,13,16,20,23,28,37,52,101,198] },
+    5:  { H: [10,14,37,46,62,72,90,119,177,353,703], M: [7,10,24,30,38,45,55,73,107,210,419], L: [6,7,14,17,21,24,28,38,55,105,209] },
+    10: { H: [10,16,41,51,67,79,98,130,193,387,769], M: [7,10,27,31,41,48,59,77,115,226,450], L: [6,7,14,17,23,25,30,39,58,111,220] },
+    20: { H: [13,20,52,63,83,100,123,163,242,480,958], M: [9,13,30,37,48,56,70,93,136,269,535], L: [6,7,16,18,24,28,34,44,65,125,245] },
+    40: { H: [20,31,84,104,137,164,203,270,403,804,1605], M: [11,17,44,55,72,84,105,139,206,408,812], L: [7,9,20,24,30,35,44,56,83,163,322] },
+  };
+  const APPENDIX_5_HAPHAZARD = {
+    0:  { H: [11,17,44,52,69,81,101,132,198,391,777], M: [9,11,27,34,44,51,62,81,121,237,471], L: [6,9,14,18,23,27,34,44,62,121,237] },
+    5:  { H: [11,17,44,55,73,86,107,143,212,423,843], M: [9,11,28,35,45,53,65,87,128,252,501], L: [6,9,17,20,25,28,34,45,65,126,249] },
+    10: { H: [11,18,48,60,80,94,118,156,231,464,921], M: [9,11,31,37,48,56,70,93,137,270,539], L: [6,9,17,20,27,30,35,46,69,132,263] },
+    20: { H: [14,23,62,76,98,119,147,195,290,576,1148], M: [10,14,35,44,56,67,84,111,163,322,641], L: [6,9,18,21,28,34,39,52,77,149,294] },
+    40: { H: [23,37,101,123,164,196,244,324,483,963,1925], M: [13,20,52,65,86,101,126,165,247,489,975], L: [9,10,23,28,35,42,52,67,98,195,387] },
+  };
+  const CONF_LABEL = { H: 'High (90%)', M: 'Medium (75%)', L: 'Low (50%)' };
+
+  function confidenceLevel(ir, cr, controlsTested) {
+    ir = ir.toUpperCase();
+    if (!controlsTested) return ir;
+    cr = cr.toUpperCase();
+    const t = { 'H,H':'H','H,M':'M','H,L':'M','M,H':'M','M,M':'M','M,L':'L','L,H':'L','L,M':'L','L,L':'L' };
+    return t[ir + ',' + cr];
+  }
+  function bracket(tmPct) {
+    const thr = TM_THRESHOLDS;
+    if (tmPct >= thr[0]) return [0, 0];
+    for (let i = 0; i < thr.length - 1; i++) if (thr[i] >= tmPct && tmPct >= thr[i+1]) return [i, i+1];
+    return [thr.length - 1, thr.length - 1];
+  }
+  function sampleSizeToD(population, tm, confidence, ratioPct, method) {
+    const tables = method === 'statistical' ? APPENDIX_4_STATISTICAL : APPENDIX_5_HAPHAZARD;
+    const row = tables[ratioPct][confidence];
+    const tmPct = (tm / population) * 100;
+    const [loIdx, hiIdx] = bracket(tmPct);
+    const nLow = row[loIdx], nHigh = row[hiIdx];
+    const thrHi = TM_THRESHOLDS[loIdx], thrLo = TM_THRESHOLDS[hiIdx];
+    const frac = thrHi !== thrLo ? (thrHi - tmPct) / (thrHi - thrLo) : 0;
+    const suggested = Math.round(nLow + frac * (nHigh - nLow));
+    return { tmPct, thrHi, thrLo, loIdx, hiIdx, nLow, nHigh, suggested, row, confidenceLabel: CONF_LABEL[confidence] };
+  }
+
+  const TOC_TABLE = {
+    daily:     { label: 'Manual, daily / multiple times per day', min: 34, ext: {1:25, 2:45} },
+    weekly:    { label: 'Manual, weekly', min: 10, ext: {1:17} },
+    monthly:   { label: 'Manual, monthly', min: 9, ext: {} },
+    quarterly: { label: 'Manual, quarterly', min: 6, ext: {} },
+    annual:    { label: 'Manual, annual', min: 4, ext: {} },
+    automated: { label: 'Automated application control (effective ITGCs)', min: 4, ext: {1:20} },
+  };
+  function tocEvaluate(freq, failures) {
+    const cfg = TOC_TABLE[freq];
+    if (failures === 0) return { conclusion: 'Satisfactory', detail: 'No failure in the minimum sample.', needsExtension: false };
+    const add = cfg.ext[failures];
+    if (add) return { conclusion: 'Extension required', detail: `Extend the sample by ${add} items. 0 further failures ⇒ Satisfactory; 1+ ⇒ Unsatisfactory.`, needsExtension: true, add };
+    return { conclusion: 'Unsatisfactory', detail: 'No extension provided for this number of failures — direct conclusion.', needsExtension: false };
+  }
+
+  function cryptoRandom() {
+    const a = new Uint32Array(1); crypto.getRandomValues(a); return a[0] / 4294967296;
+  }
+  function randomSelection(n, k) {
+    const pool = Array.from({length:n}, (_,i)=>i); const picked = []; let rem = pool.length;
+    for (let i=0; i<k && rem>0; i++) { const j = Math.floor(cryptoRandom()*rem); picked.push(pool[j]); pool[j]=pool[rem-1]; rem--; }
+    return picked.sort((a,b)=>a-b);
+  }
+  function systematicSelection(n, k) {
+    const interval = n / k; const start = cryptoRandom() * interval; const picks = new Set();
+    for (let i=0;i<k;i++) { let idx = Math.floor(start + i*interval); if (idx>=n) idx=n-1; picks.add(idx); }
+    return { picks: Array.from(picks).sort((a,b)=>a-b), interval, start };
+  }
+  function musSelection(values, k) {
+    const total = values.reduce((a,b)=>a+b,0); const interval = total/k; const start = cryptoRandom()*interval;
+    const cum = []; let running=0; for (const v of values) { running+=v; cum.push(running); }
+    const selected = new Set();
+    for (let i=0;i<k;i++) { const h = start + i*interval; let lo=0, hi=cum.length-1;
+      while (lo<hi) { const mid=(lo+hi)>>1; if (cum[mid]>=h) hi=mid; else lo=mid+1; } selected.add(lo); }
+    const highFlags = values.map((v,i)=> v>=interval ? i : -1).filter(i=>i>=0);
+    return { picks: Array.from(selected).sort((a,b)=>a-b), interval, start, highFlags };
+  }
+
+  function splitCSVLine(line) {
+    // Proper CSV-quote-aware split: a comma inside a "quoted field" (e.g. "667,591") is
+    // NOT a delimiter, and doubled quotes ("") inside a quoted field are an escaped quote.
+    const result = [];
+    let cur = '', inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i];
+      if (c === '"') {
+        if (inQuotes && line[i + 1] === '"') { cur += '"'; i++; }
+        else inQuotes = !inQuotes;
+      } else if (c === ',' && !inQuotes) {
+        result.push(cur); cur = '';
+      } else {
+        cur += c;
+      }
+    }
+    result.push(cur);
+    return result;
+  }
+
+  function splitFields(line) {
+    // Excel paste uses TAB between columns; commas inside a field (e.g. "457,722" as a
+    // thousand separator) must NOT be treated as a delimiter when a real tab is present.
+    // Only fall back to CSV-aware comma-splitting for lines with no tab (manual/CSV entry),
+    // which also correctly handles fields deliberately quoted because they contain a comma.
+    return line.includes('\t') ? line.split('\t') : splitCSVLine(line);
+  }
+
+  function isNumericField(s) {
+    return /^-?[\d.,]+$/.test(String(s).replace(/\s/g, ''));
+  }
+
+  // Find the value field anywhere among the non-ID parts — not necessarily the last one,
+  // since a real export may have trailing columns after the amount (currency, status, ...).
+  // Scanning from the right still prefers a value near the end when more than one field
+  // looks numeric, matching how these rows are normally laid out.
+  function extractValue(restParts) {
+    for (let j = restParts.length - 1; j >= 0; j--) {
+      if (isNumericField(restParts[j])) {
+        const value = parseFloat(restParts[j].replace(/,/g, ''));
+        const desc = restParts.filter((_, k) => k !== j).join(' ');
+        return { value, desc };
+      }
+    }
+    return { value: null, desc: restParts.join(' ') };
+  }
+
+  function rowHasNumericField(line) {
+    const parts = splitFields(line).map(p => p.trim()).filter(p => p !== '');
+    return parts.slice(1).some(isNumericField);
+  }
+
+  function parsePopulation(text) {
+    if (!text.trim()) return null;
+    let lines = text.trim().split('\n').map(l=>l.trim()).filter(Boolean);
+    // Skip an apparent header row: it has no numeric field at all while the next row does.
+    if (lines.length > 1 && !rowHasNumericField(lines[0]) && rowHasNumericField(lines[1])) {
+      lines = lines.slice(1);
+    }
+    return lines.map((line, i) => {
+      const parts = splitFields(line).map(p=>p.trim()).filter(p => p !== '');
+      const id = parts[0] || ('Item ' + (i+1));
+      const { value, desc } = extractValue(parts.slice(1));
+      return { id, desc, value };
+    });
+  }
+
+  function fmt(n) { return Number(n).toLocaleString('en-US', {maximumFractionDigits: 2}); }
+  function esc(s) { const d=document.createElement('div'); d.textContent = s==null?'':String(s); return d.innerHTML; }
+
+  let todUploadedPopulation = null;
+  let tocUploadedPopulation = null;
+  let todTargetedItems = null;
+  let todTargetCriteria = '';
+
+  function wireThousandsFormatting(id) {
+    const input = document.getElementById(id);
+    if (!input) return;
+    input.addEventListener('blur', () => {
+      const num = parseFloat(input.value.replace(/,/g, ''));
+      if (!isNaN(num)) input.value = num.toLocaleString('en-US');
+    });
+    input.addEventListener('focus', () => { input.value = input.value.replace(/,/g, ''); });
+  }
+  ['tod-population', 'tod-tm', 'eng-om', 'eng-pm'].forEach(wireThousandsFormatting);
+
+  // ============ Engagement details (persisted locally, applied across tests and exports) ============
+  const ENGAGEMENT_KEY = 'sampling-test-engagement-v1';
+  const engagementFields = ['eng-client', 'eng-auditor', 'eng-om', 'eng-pm'];
+  function loadEngagement() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(ENGAGEMENT_KEY) || '{}');
+      engagementFields.forEach(id => { if (saved[id]) document.getElementById(id).value = saved[id]; });
+    } catch (e) {}
+  }
+  function saveEngagement() {
+    try {
+      const data = {};
+      engagementFields.forEach(id => { data[id] = document.getElementById(id).value; });
+      localStorage.setItem(ENGAGEMENT_KEY, JSON.stringify(data));
+    } catch (e) {}
+  }
+  engagementFields.forEach(id => document.getElementById(id).addEventListener('change', saveEngagement));
+  loadEngagement();
+
+  // "Prepared by" is a separate, longer-lived identity setting — kept in its own key so it
+  // survives independently of whichever engagement (client/OM/PM) is currently loaded. Each
+  // team member sets this once on their own device; it then fills in automatically every time.
+  const PREPARED_BY_KEY = 'sampling-test-prepared-by-v1';
+  function loadPreparedBy() {
+    try {
+      const saved = localStorage.getItem(PREPARED_BY_KEY);
+      if (saved) document.getElementById('eng-prepared-by').value = saved;
+    } catch (e) {}
+  }
+  function savePreparedBy() {
+    try { localStorage.setItem(PREPARED_BY_KEY, document.getElementById('eng-prepared-by').value); } catch (e) {}
+  }
+  document.getElementById('eng-prepared-by').addEventListener('change', savePreparedBy);
+  loadPreparedBy();
+
+  function engagementSummary() {
+    const client = document.getElementById('eng-client').value;
+    const auditor = document.getElementById('eng-auditor').value;
+    const om = document.getElementById('eng-om').value;
+    const pm = document.getElementById('eng-pm').value;
+    const preparedBy = document.getElementById('eng-prepared-by').value;
+    const parts = [];
+    if (client) parts.push(client);
+    if (auditor) parts.push('Auditor in charge: ' + auditor);
+    const omNum = parseFloat(String(om).replace(/,/g, ''));
+    const pmNum = parseFloat(String(pm).replace(/,/g, ''));
+    if (om) parts.push('OM: ' + (!isNaN(omNum) ? fmt(omNum) : om));
+    if (pm) parts.push('PM: ' + (!isNaN(pmNum) ? fmt(pmNum) : pm));
+    if (preparedBy) parts.push('Prepared by: ' + preparedBy);
+    return parts;
+  }
+
+  async function readPopulationFile(file) {
+    const name = file.name.toLowerCase();
+    if (name.endsWith('.csv') || name.endsWith('.txt')) {
+      const text = await file.text();
+      return parsePopulation(text);
+    }
+    if (name.endsWith('.xlsx') || name.endsWith('.xls')) {
+      const buf = await file.arrayBuffer();
+      const wb = XLSX.read(buf, { type: 'array' });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws, { header: 1, blankrows: false, defval: '' });
+      let dataRows = rows.filter(r => r.some(c => String(c).trim() !== ''));
+      // Build {id, desc, value} directly from each row's own cells — never re-join them into a
+      // comma string and re-split, which corrupts any cell (e.g. a text-typed "667,591") that
+      // already contains a comma. The value can be any cell, not necessarily the last one (a
+      // real export may have trailing columns after the amount).
+      const rowHasNumericCell = r => r.slice(1).some(c => typeof c === 'number' || isNumericField(c));
+      if (dataRows.length > 1 && !rowHasNumericCell(dataRows[0]) && rowHasNumericCell(dataRows[1])) dataRows = dataRows.slice(1);
+      return dataRows.map((r, i) => {
+        const cells = r.map(c => String(c).trim()).filter(c => c !== '');
+        if (!cells.length) return null;
+        const id = cells[0] || ('Item ' + (i + 1));
+        const { value, desc } = extractValue(cells.slice(1));
+        return { id, desc, value };
+      }).filter(Boolean);
+    }
+    throw new Error('Unsupported file type (use .csv or .xlsx)');
+  }
+
+  function wireFileInput(inputId, statusId, setter) {
+    const input = document.getElementById(inputId);
+    const status = document.getElementById(statusId);
+    input.addEventListener('change', async () => {
+      if (!input.files.length) { setter(null); status.textContent = ''; return; }
+      const file = input.files[0];
+      status.textContent = 'Reading ' + file.name + '...';
+      try {
+        const parsed = await readPopulationFile(file);
+        setter(parsed);
+        status.textContent = parsed ? ('Loaded ' + parsed.length + ' rows from ' + file.name + '.') : ('No rows found in ' + file.name + '.');
+      } catch (e) {
+        setter(null);
+        status.textContent = 'Could not read ' + file.name + ': ' + e.message;
+      }
+    });
+  }
+  wireFileInput('tod-pop-file', 'tod-pop-file-status', v => { todUploadedPopulation = v; });
+  wireFileInput('toc-pop-file', 'toc-pop-file-status', v => { tocUploadedPopulation = v; });
+
+  // ============ Excel integration (Office.js) ============
+  function sanitizeSheetName(title) {
+    let name = String(title || 'Sample').replace(/[:\\/?*\[\]]/g, '-').trim();
+    return name.slice(0, 31) || 'Sample';
+  }
+
+  async function getSelectedRangeAsPopulation() {
+    return Excel.run(async (context) => {
+      const range = context.workbook.getSelectedRange();
+      range.load('values');
+      await context.sync();
+      let dataRows = range.values.filter(r => r.some(c => String(c).trim() !== ''));
+      const rowHasNumericCell = r => r.slice(1).some(c => typeof c === 'number' || isNumericField(c));
+      if (dataRows.length > 1 && !rowHasNumericCell(dataRows[0]) && rowHasNumericCell(dataRows[1])) dataRows = dataRows.slice(1);
+      return dataRows.map((r, i) => {
+        const cells = r.map(c => String(c).trim()).filter(c => c !== '');
+        if (!cells.length) return null;
+        const id = cells[0] || ('Item ' + (i + 1));
+        const { value, desc } = extractValue(cells.slice(1));
+        return { id, desc, value };
+      }).filter(Boolean);
+    });
+  }
+
+  async function writeItemsToNewSheet(titleBase, items, headerCols, rowMapper) {
+    return await Excel.run(async (context) => {
+      const sheets = context.workbook.worksheets;
+      sheets.load('items/name');
+      await context.sync();
+      const existing = sheets.items.map(s => s.name);
+      let base = sanitizeSheetName(titleBase);
+      let name = base, i = 1;
+      while (existing.includes(name)) { name = sanitizeSheetName(base + ' ' + (++i)); }
+      const sheet = sheets.add(name);
+      const data = [headerCols, ...items.map(rowMapper)];
+      const range = sheet.getRangeByIndexes(0, 0, data.length, headerCols.length);
+      range.values = data;
+      range.format.autofitColumns();
+      const headerRange = sheet.getRangeByIndexes(0, 0, 1, headerCols.length);
+      headerRange.format.font.bold = true;
+      headerRange.format.fill.color = '#E4EEE9';
+      sheet.activate();
+      await context.sync();
+      return name;
+    });
+  }
+
+  function wireExcelButtons(prefix, resultGetter) {
+    const excelBtn = document.getElementById(prefix + '-excel-btn');
+    const excelStatus = document.getElementById(prefix + '-excel-status');
+    const writeBtn = document.getElementById(prefix + '-write-btn');
+    const writeStatus = document.getElementById(prefix + '-write-status');
+    const setter = prefix === 'tod' ? (v => { todUploadedPopulation = v; }) : (v => { tocUploadedPopulation = v; });
+
+    if (excelBtn) excelBtn.addEventListener('click', async () => {
+      excelStatus.textContent = 'Reading selected range...';
+      try {
+        const parsed = await getSelectedRangeAsPopulation();
+        setter(parsed);
+        excelStatus.textContent = parsed && parsed.length ? ('Loaded ' + parsed.length + ' rows from the selected range.') : 'No rows found in the selected range.';
+      } catch (e) {
+        excelStatus.textContent = 'Could not read the selection: ' + e.message;
+      }
+    });
+
+    if (writeBtn) writeBtn.addEventListener('click', async () => {
+      const result = resultGetter();
+      // ToD's combined table is r.selection.combined (id, desc, value, selType);
+      // ToC's is r.selection.items (id, desc, selType) -- no monetary value.
+      const isTod = prefix === 'tod';
+      const rows = result && result.selection && (isTod ? result.selection.combined : result.selection.items);
+      if (!rows || !rows.length) { writeStatus.textContent = 'Generate a sample first.'; return; }
+      writeStatus.textContent = 'Writing to a new sheet...';
+      try {
+        const header = isTod ? ['ID', 'Description', 'Value', 'Selection type'] : ['ID / Date', 'Description', 'Selection type'];
+        const mapper = isTod
+          ? (it => [it.id, it.desc || '', (it.value !== null && it.value !== undefined) ? it.value : '', it.selType || ''])
+          : (it => [it.id, it.desc || '', it.selType || '']);
+        const sheetName = await writeItemsToNewSheet(prefix.toUpperCase() + ' Sample', rows, header, mapper);
+        writeStatus.textContent = 'Written to sheet "' + sheetName + '".';
+      } catch (e) {
+        writeStatus.textContent = 'Could not write to the sheet: ' + e.message;
+      }
+    });
+  }
+
+  if (typeof Office !== 'undefined') {
+    Office.onReady((info) => {
+      if (info.host === Office.HostType.Excel) {
+        document.querySelectorAll('.excel-only').forEach(el => { el.style.display = ''; });
+        wireExcelButtons('tod', () => lastTodResult);
+        wireExcelButtons('toc', () => lastTocResult);
+      }
+    });
+  }
+
+  // ============ TAB SWITCHING ============
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // ============ TOD: controls-tested toggle ============
+  const todControlsTested = document.getElementById('tod-controls-tested');
+  const todCrWrap = document.getElementById('tod-cr-wrap');
+  todControlsTested.addEventListener('change', () => { todCrWrap.style.display = todControlsTested.checked ? 'block' : 'none'; });
+
+  // ============ TOD: calculate ============
+  let lastTodResult = null;
+  document.getElementById('tod-calc-btn').addEventListener('click', () => {
+    const population = parseFloat(document.getElementById('tod-population').value.replace(/,/g, ''));
+    const tm = parseFloat(document.getElementById('tod-tm').value.replace(/,/g, ''));
+    const ir = document.getElementById('tod-ir').value;
+    const controlsTested = todControlsTested.checked;
+    const cr = document.getElementById('tod-cr').value;
+    const ratioPct = parseInt(document.getElementById('tod-ratio').value, 10);
+    const method = document.querySelector('input[name=tod-method]:checked').value;
+    const out = document.getElementById('tod-results');
+
+    if (!population || !tm || population <= 0) {
+      out.innerHTML = '<fieldset><legend>Result</legend><p class="empty">Enter the population and the tolerable misstatement.</p></fieldset>';
+      return;
+    }
+    const conf = confidenceLevel(ir, cr, controlsTested);
+    const r = sampleSizeToD(population, tm, conf, ratioPct, method);
+    lastTodResult = { ...r, ratioPct, method, population, tm, ir, cr, controlsTested };
+
+    const cols = TM_THRESHOLDS;
+    let tableHtml = '<table><tr><th>TM% threshold</th>' + cols.map((c,i)=>`<th class="${i===r.loIdx||i===r.hiIdx?'hit':''}">${c<50?c+'%':'<50%'}</th>`).join('') + '</tr>';
+    tableHtml += '<tr><td class="rowhead">n (' + r.confidenceLabel + ')</td>' + r.row.map((v,i)=>`<td class="${i===r.loIdx||i===r.hiIdx?'hit':''}">${v}</td>`).join('') + '</tr></table>';
+
+    out.innerHTML = `
+      <fieldset>
+        <legend>Result</legend>
+        <span class="badge">Confidence level: ${r.confidenceLabel}</span>
+        <div class="stat"><span class="k">TM as % of population</span><b>${r.tmPct.toFixed(3)}%</b></div>
+        <div class="stat"><span class="k">Method</span><b>${method==='statistical'?'Statistical / MUS (Appx. 4)':'Haphazard (Appx. 5)'}</b></div>
+        <div class="stat"><span class="k">Bracketing thresholds</span><b>${r.thrHi}% / ${r.thrLo}%</b></div>
+        <div class="stat"><span class="k">Size range (Appx. ${method==='statistical'?'4':'5'})</span><b>${r.nLow} to ${r.nHigh}</b></div>
+        ${tableHtml}
+        <label for="tod-final-n">Size retained (professional judgement)</label>
+        <input type="number" id="tod-final-n" value="${r.suggested}">
+        <div class="hint">Suggestion via linear interpolation between the two bracketing thresholds — a starting point, not a rule from the methodology. The size may be increased based on the auditor's judgement (§7.6).</div>
+      </fieldset>`;
+  });
+
+  // ============ TOD: targeted / specific items ============
+  // ============ TOD: load a worked example (population + targeted testing + selection, end to end) ============
+  document.getElementById('tod-example-btn').addEventListener('click', () => {
+    document.getElementById('tod-label').value = 'Worked example — Accounts Receivable';
+    document.getElementById('tod-population').value = '396,760';
+    document.getElementById('tod-tm').value = '15,000';
+    document.getElementById('tod-ir').value = 'M';
+    todControlsTested.checked = true;
+    todCrWrap.style.display = 'block';
+    document.getElementById('tod-cr').value = 'M';
+    document.getElementById('tod-ratio').value = '5';
+    document.querySelector('input[name=tod-method][value=statistical]').checked = true;
+
+    const examplePop = [
+      'INV-3001, Alpine Metal Works, 4250',
+      'INV-3002, Cascade Textiles, 128900',
+      'INV-3003, Northgate Foods, 9875',
+      'INV-3004, Summit Logistics, 3410',
+      'INV-3005, Bowline Insurance, 215600',
+      'INV-3006, Prairie Consulting, 6720',
+      'INV-3007, Foothills Energy, 11300',
+      'INV-3008, Meridian Office Supplies, 2150',
+      'INV-3009, Rocky Mountain Freight, 8940',
+      'INV-3010, Sterling Software, 5615',
+    ].join('\n');
+    document.getElementById('tod-pop-paste').value = examplePop;
+    todUploadedPopulation = null;
+
+    document.getElementById('tod-target-criteria').value = 'Items ≥ $100,000 (individually significant relative to TM), or related-party transactions';
+    document.getElementById('tod-target-items').value = 'INV-3002, Related party transaction\nINV-3005, Individually significant — exceeds threshold';
+
+    document.getElementById('tod-calc-btn').click();
+    document.getElementById('tod-target-btn').click();
+    const useRemainingBtn = document.getElementById('tod-use-remaining-btn');
+    if (useRemainingBtn) useRemainingBtn.click();
+    document.getElementById('tod-calc-btn').click();
+    document.getElementById('tod-select-btn').click();
+
+    document.getElementById('tod-example-btn').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  document.getElementById('tod-target-btn').addEventListener('click', () => {
+    const out = document.getElementById('tod-target-out');
+    const criteria = document.getElementById('tod-target-criteria').value;
+    const itemsText = document.getElementById('tod-target-items').value;
+    if (!itemsText.trim()) { out.innerHTML = '<p class="hint">List at least one targeted item (ID, justification).</p>'; return; }
+    const pasted = todUploadedPopulation || parsePopulation(document.getElementById('tod-pop-paste').value);
+    if (!pasted) { out.innerHTML = '<p class="hint">Paste or import the population first (below).</p>'; return; }
+
+    const targetLines = itemsText.trim().split('\n').map(l => l.trim()).filter(Boolean).map(line => {
+      let parts = splitFields(line);
+      if (parts.length === 1) {
+        // No comma/tab found — fall back to "ID <space> justification" (e.g. "FAC-2026-0213 Above PM").
+        const m = line.match(/^(\S+)\s+(.*)$/);
+        if (m) parts = [m[1], m[2]];
+      }
+      return { id: parts[0].trim(), justification: parts.slice(1).join(', ').trim() };
+    });
+
+    const targeted = [];
+    const notFound = [];
+    targetLines.forEach(t => {
+      const match = pasted.find(p => p.id === t.id);
+      if (match) targeted.push({ ...match, justification: t.justification || '(no justification given)' });
+      else notFound.push(t.id);
+    });
+    const targetIds = new Set(targeted.map(t => t.id));
+    const remaining = pasted.filter(p => !targetIds.has(p.id));
+    const targetedTotal = targeted.reduce((a, p) => a + (p.value || 0), 0);
+    const remainingTotal = remaining.reduce((a, p) => a + (p.value || 0), 0);
+    todTargetedItems = targeted;
+    todTargetCriteria = criteria;
+
+    const rows = targeted.map(p => `<tr><td>${esc(p.id)}</td><td>${esc(p.desc)}</td><td>${p.value!==null?fmt(p.value):'—'}</td><td>${esc(p.justification)}</td></tr>`).join('');
+    out.innerHTML = `
+      ${notFound.length ? `<div class="hint" style="color:var(--rust);">Not found in the population: ${notFound.map(esc).join(', ')}</div>` : ''}
+      <div class="stat"><span class="k">Targeted items (tested 100%)</span><b>${targeted.length} items, ${fmt(targetedTotal)}</b></div>
+      <div class="stat"><span class="k">Remaining population (for sampling)</span><b>${remaining.length} items, ${fmt(remainingTotal)}</b></div>
+      ${rows ? `<table><tr><th>ID</th><th>Description</th><th>Value</th><th>Justification</th></tr>${rows}</table>` : ''}
+      <button class="action" id="tod-use-remaining-btn">Use remaining population (${fmt(remainingTotal)}) in Step 1</button>`;
+
+    document.getElementById('tod-use-remaining-btn').addEventListener('click', () => {
+      document.getElementById('tod-population').value = remainingTotal.toLocaleString('en-US');
+      todUploadedPopulation = remaining;
+      const status = document.getElementById('tod-pop-file-status');
+      if (status) status.textContent = `Using ${remaining.length} remaining items (${targeted.length} targeted item(s) excluded) for sampling.`;
+    });
+  });
+
+  // ============ TOD: selection ============
+  document.getElementById('tod-select-btn').addEventListener('click', () => {
+    const finalNInput = document.getElementById('tod-final-n');
+    const n = finalNInput ? parseInt(finalNInput.value, 10) : null;
+    const out = document.getElementById('tod-selection-out');
+    if (!n || n <= 0) { out.innerHTML = '<p class="hint">Calculate the sample size first (step 1).</p>'; return; }
+
+    const pasted = todUploadedPopulation || parsePopulation(document.getElementById('tod-pop-paste').value);
+    const countField = parseInt(document.getElementById('tod-pop-count').value, 10);
+    const method = document.querySelector('input[name=tod-sel-method]:checked').value;
+    const popSize = pasted ? pasted.length : countField;
+
+    if (!popSize || popSize < n) { out.innerHTML = '<p class="hint">Population missing or smaller than the sample size.</p>'; return; }
+    if (method === 'mus' && (!pasted || pasted.some(p=>p.value===null))) {
+      out.innerHTML = '<p class="hint">MUS requires a pasted population with a numeric value column on each line.</p>'; return;
+    }
+
+    let picks, traceLine;
+    if (method === 'random') {
+      picks = randomSelection(popSize, n);
+      traceLine = `Random selection (cryptographic generator), ${n} items out of ${popSize}.`;
+    } else if (method === 'systematic') {
+      const s = systematicSelection(popSize, n);
+      picks = s.picks;
+      traceLine = `Systematic selection: interval = ${fmt(s.interval)}, random starting point = ${fmt(s.start)}.`;
+    } else {
+      const values = pasted.map(p=>p.value);
+      const s = musSelection(values, n);
+      picks = s.picks;
+      traceLine = `Monetary Unit Sampling: interval = ${fmt(s.interval)}, random starting point = ${fmt(s.start)}. Items with individual value ≥ interval (automatically selected): ${s.highFlags.length}.`;
+    }
+
+    const methodLabel = { random: 'Random selection', systematic: 'Systematic selection', mus: 'Monetary Unit Sampling' }[method];
+    const sampledItems = picks.map(idx => pasted ? { ...pasted[idx], selType: methodLabel } : { id: 'Item #'+(idx+1), desc: '', value: null, selType: methodLabel });
+    const targetedForTable = (todTargetedItems || []).map(p => ({ ...p, selType: 'Targeted testing (100%)' }));
+    const combined = [...targetedForTable, ...sampledItems];
+
+    let rows = combined.map(p => `<tr><td>${esc(p.id)}</td><td>${esc(p.desc)}</td><td>${p.value!==null&&p.value!==undefined?fmt(p.value):'—'}</td><td>${esc(p.selType)}</td></tr>`).join('');
+
+    lastTodResult = lastTodResult || {};
+    lastTodResult.selection = { method, n, popSize, traceLine, picks: picks.map(idx => pasted ? pasted[idx].id : ('Item #'+(idx+1))), items: sampledItems, combined };
+
+    out.innerHTML = `<div class="hint" style="margin-top:.8rem;">${traceLine}</div>
+      <table><tr><th>ID</th><th>Description</th><th>Value</th><th>Selection type</th></tr>${rows}</table>`;
+  });
+
+  // ============ TOD: documentation ============
+  document.getElementById('tod-doc-btn').addEventListener('click', () => {
+    const out = document.getElementById('tod-doc-out');
+    if (!lastTodResult || !lastTodResult.suggested) { out.innerHTML = '<p class="hint">Calculate the size first (step 1).</p>'; return; }
+    const label = document.getElementById('tod-label').value || 'Test of Details';
+    const source = document.getElementById('tod-source').value;
+    const finalNInput = document.getElementById('tod-final-n');
+    const finalN = finalNInput ? finalNInput.value : lastTodResult.suggested;
+    const sel = lastTodResult.selection;
+
+    let text = `${label} — Substantive Test of Details\n`;
+    text += `Population: ${fmt(lastTodResult.population)} ; Tolerable misstatement: ${fmt(lastTodResult.tm)} (${lastTodResult.tmPct.toFixed(3)}% of population).\n`;
+    text += `Auditor's confidence level: ${lastTodResult.confidenceLabel} (IR=${lastTodResult.ir}${lastTodResult.controlsTested?', CR='+lastTodResult.cr:', controls not tested'}). Ratio of expected error to TM: ${lastTodResult.ratioPct}%.\n`;
+    text += `Method: ${lastTodResult.method==='statistical'?'statistical selection (MUS), Appendix 4':'haphazard selection, Appendix 5'}. Suggested range: ${lastTodResult.nLow}–${lastTodResult.nHigh}. Size retained: ${finalN} items (professional judgement).\n`;
+    if (todTargetedItems && todTargetedItems.length) {
+      const tTotal = todTargetedItems.reduce((a, p) => a + (p.value||0), 0);
+      text += `Targeted/specific items (§5)${todTargetCriteria ? ' — criteria: ' + todTargetCriteria : ''}: ${todTargetedItems.length} items totaling ${fmt(tTotal)} individually tested at 100%, excluded from the sampled population.\n`;
+      text += todTargetedItems.map(p => `  • ${p.id} (${p.value!==null?fmt(p.value):'—'}): ${p.justification}`).join('\n') + '\n';
+    }
+    if (source) text += `Population source: ${source}.\n`;
+    if (sel) text += `Item selection: ${sel.traceLine}\n`;
+
+    out.innerHTML = `<div class="doctext">${esc(text)}</div>
+      <div class="btnrow">
+        <button class="ghost" data-copy="tod">Copy</button>
+        <button class="ghost" data-addlog="tod">Add to log</button>
+      </div>`;
+    out.dataset.text = text; out.dataset.label = label;
+    wireCopyAndLog(out, 'tod');
+  });
+
+  // ============ TOC: freq / other toggle ============
+  const tocFreq = document.getElementById('toc-freq');
+  const tocOtherWrap = document.getElementById('toc-other-wrap');
+  tocFreq.addEventListener('change', () => { tocOtherWrap.style.display = tocFreq.value === 'other' ? 'block' : 'none'; });
+
+  // ============ TOC: calculate min size ============
+  let lastTocResult = null;
+  document.getElementById('toc-calc-btn').addEventListener('click', () => {
+    const freq = tocFreq.value;
+    const out = document.getElementById('toc-results');
+    let min, label, note = '';
+    if (freq === 'other') {
+      const occ = parseInt(document.getElementById('toc-occurrences').value, 10);
+      if (!occ) { out.innerHTML = '<fieldset><legend>Result</legend><p class="empty">Enter the number of occurrences.</p></fieldset>'; return; }
+      min = Math.max(1, Math.round(occ * 0.10));
+      label = 'Frequency outside standard categories';
+      note = `Professional judgement: ~10% of ${occ} occurrences.`;
+    } else {
+      const cfg = TOC_TABLE[freq];
+      min = cfg.min; label = cfg.label;
+    }
+    lastTocResult = { freq, min, label };
+
+    out.innerHTML = `
+      <fieldset>
+        <legend>Result</legend>
+        <span class="badge">${esc(label)}</span>
+        <div class="stat"><span class="k">Minimum size (Table 1)</span><b>${min} items</b></div>
+        ${note ? `<div class="hint">${note}</div>` : ''}
+        <div class="hint">Basis: 90% confidence level, 10% tolerable rate of deviation (note *, §6.3).</div>
+      </fieldset>`;
+  });
+
+  // ============ TOC: evaluate results ============
+  const tocFail1 = document.getElementById('toc-fail1');
+  const tocExtWrap = document.getElementById('toc-ext-wrap');
+  document.getElementById('toc-eval-btn').addEventListener('click', () => {
+    const out = document.getElementById('toc-eval-out');
+    if (!lastTocResult) { out.innerHTML = '<p class="hint">Determine the minimum size first.</p>'; return; }
+    const f1 = parseInt(tocFail1.value, 10) || 0;
+    const ev = tocEvaluate(lastTocResult.freq === 'other' ? 'monthly' : lastTocResult.freq, f1); // 'other' has no formal extension table -> treat conservatively
+    if (ev.needsExtension) {
+      tocExtWrap.style.display = 'block';
+      const f2 = parseInt(document.getElementById('toc-fail2').value, 10) || 0;
+      const finalConclusion = f2 === 0 ? 'Satisfactory' : 'Unsatisfactory';
+      out.innerHTML = `<div class="stat"><span class="k">Initial sample (${f1} failure(s))</span><b>Extension of ${ev.add} items</b></div>
+        <div class="stat"><span class="k">Final conclusion</span><b class="${finalConclusion==='Unsatisfactory'?'':''}">${finalConclusion}</b></div>
+        <span class="badge ${finalConclusion==='Unsatisfactory'?'warn':''}">${finalConclusion}</span>`;
+      lastTocResult.conclusion = finalConclusion; lastTocResult.failures = f1; lastTocResult.extensionAdd = ev.add; lastTocResult.failures2 = f2;
+    } else {
+      tocExtWrap.style.display = 'none';
+      out.innerHTML = `<span class="badge ${ev.conclusion==='Unsatisfactory'?'warn':''}">${ev.conclusion}</span><div class="hint">${ev.detail}</div>`;
+      lastTocResult.conclusion = ev.conclusion; lastTocResult.failures = f1;
+    }
+  });
+
+  // ============ TOC: selection ============
+  document.getElementById('toc-select-btn').addEventListener('click', () => {
+    const out = document.getElementById('toc-selection-out');
+    if (!lastTocResult) { out.innerHTML = '<p class="hint">Determine the minimum size first (step 1).</p>'; return; }
+    const n = lastTocResult.min;
+    const pasted = tocUploadedPopulation || parsePopulation(document.getElementById('toc-pop-paste').value);
+    const countField = parseInt(document.getElementById('toc-pop-count').value, 10);
+    const method = document.querySelector('input[name=toc-sel-method]:checked').value;
+    const popSize = pasted ? pasted.length : countField;
+
+    if (!popSize || popSize < n) { out.innerHTML = '<p class="hint">Population missing or smaller than the minimum size.</p>'; return; }
+
+    let picks, traceLine;
+    if (method === 'random') {
+      picks = randomSelection(popSize, n);
+      traceLine = `Random selection (cryptographic generator), ${n} items out of ${popSize}, spread across the reliance period.`;
+    } else {
+      const s = systematicSelection(popSize, n);
+      picks = s.picks;
+      traceLine = `Systematic selection: interval = ${fmt(s.interval)}, random starting point = ${fmt(s.start)}.`;
+    }
+    const methodLabel = { random: 'Random selection', systematic: 'Systematic selection' }[method];
+    const sampledItems = picks.map(idx => pasted ? { ...pasted[idx], selType: methodLabel } : { id: 'Occurrence #'+(idx+1), desc: '', selType: methodLabel });
+    let rows = sampledItems.map(p => `<tr><td>${esc(p.id)}</td><td>${esc(p.desc)}</td><td>${esc(p.selType)}</td></tr>`).join('');
+    lastTocResult.selection = { method, n, popSize, traceLine, picks: picks.map(idx => pasted ? pasted[idx].id : ('Occurrence #'+(idx+1))), items: sampledItems };
+    out.innerHTML = `<div class="hint" style="margin-top:.8rem;">${traceLine}</div><table><tr><th>ID / Date</th><th>Description</th><th>Selection type</th></tr>${rows}</table>`;
+  });
+
+  // ============ TOC: documentation ============
+  document.getElementById('toc-doc-btn').addEventListener('click', () => {
+    const out = document.getElementById('toc-doc-out');
+    if (!lastTocResult) { out.innerHTML = '<p class="hint">Determine the minimum size first.</p>'; return; }
+    const label = document.getElementById('toc-label').value || 'Test of Controls';
+    const source = document.getElementById('toc-source').value;
+    const sel = lastTocResult.selection;
+
+    let text = `${label} — Test of Controls\n`;
+    text += `Nature and frequency of the control: ${lastTocResult.label}.\n`;
+    text += `Minimum size (Table 1): ${lastTocResult.min} items.\n`;
+    if (lastTocResult.conclusion) text += `Conclusion: ${lastTocResult.conclusion} (initial sample failures: ${lastTocResult.failures}${lastTocResult.extensionAdd?`, extension +${lastTocResult.extensionAdd}, extension failures: ${lastTocResult.failures2}`:''}).\n`;
+    if (source) text += `Population source: ${source}.\n`;
+    if (sel) text += `Item selection: ${sel.traceLine}\n`;
+
+    out.innerHTML = `<div class="doctext">${esc(text)}</div>
+      <div class="btnrow">
+        <button class="ghost" data-copy="toc">Copy</button>
+        <button class="ghost" data-addlog="toc">Add to log</button>
+      </div>`;
+    out.dataset.text = text; out.dataset.label = label;
+    wireCopyAndLog(out, 'toc');
+  });
+
+  // ============ Copy + Log wiring ============
+  function wireCopyAndLog(container, kind) {
+    const copyBtn = container.querySelector('[data-copy]');
+    const logBtn = container.querySelector('[data-addlog]');
+    if (copyBtn) copyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(container.dataset.text).then(() => {
+        copyBtn.textContent = 'Copied ✓'; setTimeout(()=>copyBtn.textContent='Copy', 1500);
+      }).catch(()=>{});
+    });
+    if (logBtn) logBtn.addEventListener('click', () => {
+      addLogEntry(container.dataset.label, container.dataset.text);
+      logBtn.textContent = 'Added ✓'; setTimeout(()=>logBtn.textContent='Add to log', 1500);
+    });
+  }
+
+  // ============ Documentation log (localStorage) ============
+  const LOG_KEY = 'sampling-test-log-v1';
+  function readLog() { try { return JSON.parse(localStorage.getItem(LOG_KEY) || '[]'); } catch(e) { return []; } }
+  function writeLog(entries) { try { localStorage.setItem(LOG_KEY, JSON.stringify(entries)); } catch(e) {} }
+  function addLogEntry(label, text) {
+    const entries = readLog();
+    entries.push({ label, text, ts: new Date().toISOString() });
+    writeLog(entries);
+    renderLog();
+  }
+  function renderLog() {
+    const entries = readLog();
+    const list = document.getElementById('log-list');
+    if (!entries.length) { list.innerHTML = '<p class="empty">No entries yet.</p>'; return; }
+    list.innerHTML = entries.map((e,i) => `
+      <div class="logentry">
+        <h4>${esc(e.label)}</h4>
+        <time>${new Date(e.ts).toLocaleString('en-US')}</time>
+        <div class="doctext">${esc(e.text)}</div>
+      </div>`).join('');
+  }
+  document.getElementById('log-copy-btn').addEventListener('click', () => {
+    const entries = readLog();
+    const all = entries.map(e => `=== ${e.label} (${new Date(e.ts).toLocaleString('en-US')}) ===\n${e.text}`).join('\n\n');
+    navigator.clipboard.writeText(all || 'Log is empty.').catch(()=>{});
+  });
+
+  async function generatePDFReport() {
+  // jsPDF's default fonts only support WinAnsi/CP1252 — replace characters outside that set
+  // (typed by a user, or in our own text) with safe equivalents so nothing renders as garbage.
+  const PDF_CHAR_MAP = {
+    '≥': '>=', '≤': '<=', '‘': "'", '’': "'",
+    '“': '"', '”': '"', '…': '...', '×': 'x',
+  };
+  function pdfSafe(s) {
+    if (s === null || s === undefined) return '';
+    return String(s).replace(/[≥≤‘’“”…×]/g, c => PDF_CHAR_MAP[c] || c);
+  }
+
+  const exportStatus = document.getElementById('log-export-status');
+  exportStatus.textContent = '';
+
+  const hasTod = lastTodResult && lastTodResult.suggested !== undefined;
+  const hasToc = lastTocResult && lastTocResult.min !== undefined;
+  const entries = readLog();
+  if (!hasTod && !hasToc && !entries.length) {
+    exportStatus.textContent = 'Nothing to export yet — calculate a ToD or ToC sample first (tab A or B), or add a log entry.';
+    exportStatus.style.color = 'var(--rust)';
+    return;
+  }
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  const pageW = 210, pageH = 297, margin = 12, contentW = pageW - margin * 2;
+  let y = 0;
+
+  const PURPLE = [80, 34, 96];
+  const PURPLE_DARK = [37, 12, 42];
+  const INK = [30, 42, 56];
+  const INK_SOFT = [110, 120, 130];
+
+  function checkBreak(needed) {
+    if (y + needed > pageH - 15) { doc.addPage(); y = margin; }
+  }
+
+  function addBrandBar() {
+    doc.setFillColor(...PURPLE_DARK);
+    doc.rect(0, 0, pageW, 22, 'F');
+    const logoImg = document.querySelector('.brandbar img');
+    if (logoImg && logoImg.src && logoImg.src.indexOf('data:image') === 0) {
+      try {
+        const h = 10, w = h * (329 / 112);
+        doc.addImage(logoImg.src, 'PNG', margin, 6, w, h);
+      } catch (e) { console.error('logo error', e); }
+    }
+    doc.setTextColor(255, 255, 255);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(13);
+    doc.text('My Sampling', margin + 34, 14);
+    y = 30;
+  }
+
+  function addTitle() {
+    doc.setTextColor(...PURPLE_DARK);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(16);
+    doc.text('Sampling Calculator — Working Paper Export', margin, y);
+    y += 7;
+    const engParts = engagementSummary();
+    if (engParts.length) {
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9);
+      doc.setTextColor(...INK);
+      const lines = doc.splitTextToSize(pdfSafe(engParts.join('   ·   ')), contentW);
+      doc.text(lines, margin, y);
+      y += lines.length * 4.5 + 2;
+    }
+    doc.setFontSize(8);
+    doc.setTextColor(...INK_SOFT);
+    doc.text(pdfSafe('Generated ' + new Date().toLocaleString('en-US')), margin, y);
+    y += 8;
+  }
+
+  function addSectionTitle(text) {
+    checkBreak(12);
+    doc.setDrawColor(...PURPLE);
+    doc.setLineWidth(0.6);
+    doc.line(margin, y, pageW - margin, y);
+    y += 6;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(13);
+    doc.setTextColor(...PURPLE_DARK);
+    doc.text(pdfSafe(text), margin, y);
+    y += 7;
+  }
+
+  function addSubTitle(text) {
+    checkBreak(8);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10.5);
+    doc.setTextColor(...PURPLE);
+    doc.text(pdfSafe(text), margin, y);
+    y += 5.5;
+  }
+
+  function addKV(text) {
+    checkBreak(10);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(...INK);
+    const lines = doc.splitTextToSize(pdfSafe(text), contentW);
+    doc.text(lines, margin, y);
+    y += lines.length * 4.3 + 2;
+  }
+
+  function addTable(head, body) {
+    checkBreak(20);
+    doc.autoTable({
+      startY: y,
+      head: [head.map(pdfSafe)],
+      body: body.map(row => row.map(pdfSafe)),
+      margin: { left: margin, right: margin },
+      styles: { font: 'helvetica', fontSize: 8.5, cellPadding: 2, valign: 'top' },
+      headStyles: { fillColor: [228, 238, 233], textColor: [46, 107, 85], fontStyle: 'bold' },
+      theme: 'grid',
+    });
+    y = doc.lastAutoTable.finalY + 6;
+  }
+
+  function addPre(text) {
+    doc.setFont('courier', 'normal');
+    doc.setFontSize(8.3);
+    doc.setTextColor(...INK);
+    const rawLines = text.split('\n').filter(l => l.trim());
+    rawLines.forEach(line => {
+      const wrapped = doc.splitTextToSize(pdfSafe(line), contentW);
+      checkBreak(wrapped.length * 4 + 1);
+      doc.text(wrapped, margin, y);
+      y += wrapped.length * 4;
+    });
+    y += 4;
+  }
+
+  addBrandBar();
+  addTitle();
+
+  if (hasTod) {
+    const r = lastTodResult;
+    const finalNInput = document.getElementById('tod-final-n');
+    const finalN = finalNInput ? finalNInput.value : r.suggested;
+    const label = document.getElementById('tod-label').value;
+    addSectionTitle('Test of Details' + (label ? ' — ' + label : ''));
+    addSubTitle('Inputs');
+    addKV(`Population: ${fmt(r.population)}   Tolerable misstatement: ${fmt(r.tm)}   Inherent risk: ${r.ir}   ${r.controlsTested ? 'Control risk: ' + r.cr : '(controls not tested)'}   Ratio: ${r.ratioPct}%   Method: ${r.method}`);
+    addSubTitle('Calculated sample size');
+    addKV(`Confidence level: ${r.confidenceLabel}   TM as % of population: ${r.tmPct.toFixed(3)}%   Suggested range: ${r.nLow}–${r.nHigh}   Size retained: ${finalN} items`);
+    if (typeof todTargetedItems !== 'undefined' && todTargetedItems && todTargetedItems.length) {
+      addSubTitle('Targeted / specific items (§5)');
+      if (todTargetCriteria) addKV('Criteria: ' + todTargetCriteria);
+      addTable(['ID', 'Description', 'Value', 'Justification'],
+        todTargetedItems.map(p => [p.id, p.desc, p.value !== null ? fmt(p.value) : '—', p.justification]));
+    }
+    if (r.selection && r.selection.combined) {
+      addSubTitle('Items to test');
+      addKV(r.selection.traceLine);
+      addTable(['ID', 'Description', 'Value', 'Selection type'],
+        r.selection.combined.map(p => [p.id, p.desc, (p.value !== null && p.value !== undefined) ? fmt(p.value) : '—', p.selType]));
+    }
+    const docOut = document.getElementById('tod-doc-out');
+    if (docOut && docOut.dataset.text) { addSubTitle('Documentation (§8)'); addPre(docOut.dataset.text); }
+  }
+
+  if (hasToc) {
+    const r = lastTocResult;
+    const label = document.getElementById('toc-label').value;
+    addSectionTitle('Test of Controls' + (label ? ' — ' + label : ''));
+    addKV(`Control: ${r.label}   Minimum sample size: ${r.min} items`);
+    if (r.conclusion) addKV(`Conclusion: ${r.conclusion} (initial failures: ${r.failures}${r.extensionAdd ? ', extension +' + r.extensionAdd + ', extension failures: ' + r.failures2 : ''})`);
+    if (r.selection && r.selection.items) {
+      addSubTitle('Items to test');
+      addKV(r.selection.traceLine);
+      addTable(['ID / Date', 'Description', 'Selection type'],
+        r.selection.items.map(p => [p.id, p.desc, p.selType]));
+    }
+    const docOut = document.getElementById('toc-doc-out');
+    if (docOut && docOut.dataset.text) { addSubTitle('Documentation (§8)'); addPre(docOut.dataset.text); }
+  }
+
+  if (entries.length) {
+    addSectionTitle('Documentation Log');
+    entries.forEach(e => {
+      addSubTitle(e.label);
+      addKV(new Date(e.ts).toLocaleString('en-US'));
+      addPre(e.text);
+    });
+  }
+
+  doc.save('Sampling_Test_Working_Paper.pdf');
+  exportStatus.style.color = 'var(--green)';
+  exportStatus.textContent = 'Sampling_Test_Working_Paper.pdf downloaded — check your browser\'s downloads.';
+}
+
+  document.getElementById('log-pdf-btn').addEventListener('click', () => generatePDFReport());
+
+  async function generateExcelReport() {
+  const exportStatus = document.getElementById('log-export-status');
+  exportStatus.textContent = '';
+
+  const hasTod = lastTodResult && lastTodResult.suggested !== undefined;
+  const hasToc = lastTocResult && lastTocResult.min !== undefined;
+  const entries = readLog();
+  if (!hasTod && !hasToc && !entries.length) {
+    exportStatus.textContent = 'Nothing to export yet — calculate a ToD or ToC sample first (tab A or B), or add a log entry.';
+    exportStatus.style.color = 'var(--rust)';
+    return;
+  }
+
+  const PURPLE_DARK = 'FF250C2A';
+  const PURPLE = 'FF502260';
+  const GREEN_SOFT = 'FFE4EEE9';
+  const GREEN_TEXT = 'FF2E6B55';
+  const INK = 'FF1E2A38';
+  const INK_SOFT = 'FF6E7882';
+  const WHITE = 'FFFFFFFF';
+  const RULE = 'FFC9C2AE';
+  const thinRule = { style: 'thin', color: { argb: RULE } };
+
+  const wb = new ExcelJS.Workbook();
+  wb.creator = 'Internal Test Build';
+  wb.created = new Date();
+
+  const logoImg = document.querySelector('.brandbar img');
+  const logoSrc = logoImg ? logoImg.src : '';
+  let logoImgId = null;
+  if (logoSrc && logoSrc.indexOf('data:image') === 0) {
+    logoImgId = wb.addImage({ base64: logoSrc, extension: 'png' });
+  }
+
+  function brandHeader(ws, span) {
+    ws.mergeCells(1, 1, 1, span);
+    const cell = ws.getCell(1, 1);
+    cell.value = logoImgId !== null ? '' : 'Test Build';
+    cell.font = { name: 'Arial', size: 14, bold: true, color: { argb: WHITE } };
+    cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: PURPLE_DARK } };
+    cell.alignment = { vertical: 'middle', horizontal: 'left', indent: 1 };
+    ws.getRow(1).height = 26;
+    ws.getRow(2).height = 6;
+    if (logoImgId !== null) {
+      ws.addImage(logoImgId, { tl: { col: 0.08, row: 0.12 }, ext: { width: 110, height: 30 } });
+    }
+    return 3;
+  }
+
+  function titleBlock(ws, row, span) {
+    ws.mergeCells(row, 1, row, span);
+    const t = ws.getCell(row, 1);
+    t.value = 'Sampling Calculator — Working Paper Export';
+    t.font = { name: 'Arial', size: 13, bold: true, color: { argb: PURPLE_DARK } };
+    row++;
+    const engParts = engagementSummary();
+    if (engParts.length) {
+      ws.mergeCells(row, 1, row, span);
+      const e = ws.getCell(row, 1);
+      e.value = engParts.join('   ·   ');
+      e.font = { name: 'Arial', size: 9.5, color: { argb: INK } };
+      row++;
+    }
+    ws.mergeCells(row, 1, row, span);
+    const g = ws.getCell(row, 1);
+    g.value = 'Generated ' + new Date().toLocaleString('en-US');
+    g.font = { name: 'Arial', size: 8.5, italic: true, color: { argb: INK_SOFT } };
+    row += 2;
+    return row;
+  }
+
+  function sectionTitle(ws, row, text, span) {
+    ws.mergeCells(row, 1, row, span);
+    const c = ws.getCell(row, 1);
+    c.value = text;
+    c.font = { name: 'Arial', size: 12.5, bold: true, color: { argb: WHITE } };
+    c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: PURPLE } };
+    c.alignment = { vertical: 'middle', indent: 1 };
+    ws.getRow(row).height = 22;
+    return row + 1;
+  }
+
+  function subTitle(ws, row, text) {
+    const c = ws.getCell(row, 1);
+    c.value = text;
+    c.font = { name: 'Arial', size: 10.5, bold: true, color: { argb: PURPLE } };
+    return row + 1;
+  }
+
+  function kvRow(ws, row, label, value, span) {
+    const c = ws.getCell(row, 1);
+    c.value = label;
+    c.font = { name: 'Arial', size: 9.5, bold: true, color: { argb: INK } };
+    const v = ws.getCell(row, 2);
+    v.value = value;
+    v.font = { name: 'Arial', size: 9.5, color: { argb: INK } };
+    if (span > 2) ws.mergeCells(row, 2, row, span);
+    return row + 1;
+  }
+
+  function dataTable(ws, row, headers, rows, span, numericCol) {
+    headers.forEach((h, i) => {
+      const c = ws.getCell(row, i + 1);
+      c.value = h;
+      c.font = { name: 'Arial', size: 9.5, bold: true, color: { argb: GREEN_TEXT } };
+      c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: GREEN_SOFT } };
+      c.border = { top: thinRule, bottom: thinRule, left: thinRule, right: thinRule };
+    });
+    ws.getRow(row).height = 18;
+    row++;
+    rows.forEach(r => {
+      r.forEach((val, i) => {
+        const c = ws.getCell(row, i + 1);
+        c.value = val;
+        c.font = { name: 'Arial', size: 9.5, color: { argb: INK } };
+        c.border = { top: thinRule, bottom: thinRule, left: thinRule, right: thinRule };
+        c.alignment = { vertical: 'top', wrapText: true };
+        if (i === numericCol && typeof val === 'number') c.numFmt = '#,##0.00;[Red]-#,##0.00';
+      });
+      row++;
+    });
+    return row + 1;
+  }
+
+  function preBlock(ws, row, text, span) {
+    text.split('\n').filter(l => l.trim()).forEach(line => {
+      ws.mergeCells(row, 1, row, span);
+      const c = ws.getCell(row, 1);
+      c.value = line;
+      c.font = { name: 'Courier New', size: 9, color: { argb: INK } };
+      row++;
+    });
+    return row + 1;
+  }
+
+  // ============ Engagement sheet (built first so it's the first tab in the workbook) ============
+  const client = document.getElementById('eng-client').value;
+  const auditor = document.getElementById('eng-auditor').value;
+  const om = document.getElementById('eng-om').value;
+  const pm = document.getElementById('eng-pm').value;
+  const preparedBy = document.getElementById('eng-prepared-by').value;
+  if (client || auditor || om || pm || preparedBy) {
+    const ws = wb.addWorksheet('Engagement');
+    ws.columns = [{ width: 24 }, { width: 40 }];
+    let row = brandHeader(ws, 2);
+    row = titleBlock(ws, row, 2);
+    row = sectionTitle(ws, row, 'Engagement details', 2);
+    row = kvRow(ws, row, 'Client / Engagement', client, 2);
+    row = kvRow(ws, row, 'Auditor in charge', auditor, 2);
+    const omNum = parseFloat(String(om).replace(/,/g, ''));
+    const pmNum = parseFloat(String(pm).replace(/,/g, ''));
+    row = kvRow(ws, row, 'Overall Materiality (OM)', om && !isNaN(omNum) ? fmt(omNum) : om, 2);
+    row = kvRow(ws, row, 'Performance Materiality (PM)', pm && !isNaN(pmNum) ? fmt(pmNum) : pm, 2);
+    row = kvRow(ws, row, 'Prepared by', preparedBy, 2);
+  }
+
+  // ============ ToD sheet ============
+  if (hasTod) {
+    const ws = wb.addWorksheet('ToD');
+    ws.columns = [{ width: 20 }, { width: 38 }, { width: 14 }, { width: 32 }];
+    let row = brandHeader(ws, 4);
+    row = titleBlock(ws, row, 4);
+    const r = lastTodResult;
+    const finalNInput = document.getElementById('tod-final-n');
+    const finalN = finalNInput ? finalNInput.value : r.suggested;
+    const label = document.getElementById('tod-label').value;
+    row = sectionTitle(ws, row, 'Test of Details' + (label ? ' — ' + label : ''), 4);
+    row = subTitle(ws, row, 'Inputs');
+    row = kvRow(ws, row, 'Population', fmt(r.population), 4);
+    row = kvRow(ws, row, 'Tolerable misstatement', fmt(r.tm), 4);
+    row = kvRow(ws, row, 'Inherent risk', r.ir, 4);
+    row = kvRow(ws, row, r.controlsTested ? 'Control risk' : 'Controls tested', r.controlsTested ? r.cr : 'No', 4);
+    row = kvRow(ws, row, 'Ratio expected error / TM', r.ratioPct + '%', 4);
+    row = kvRow(ws, row, 'Method', r.method, 4);
+    row++;
+    row = subTitle(ws, row, 'Calculated sample size');
+    row = kvRow(ws, row, 'Confidence level', r.confidenceLabel, 4);
+    row = kvRow(ws, row, 'TM as % of population', r.tmPct.toFixed(3) + '%', 4);
+    row = kvRow(ws, row, 'Suggested range', r.nLow + '–' + r.nHigh, 4);
+    row = kvRow(ws, row, 'Size retained', finalN + ' items', 4);
+    row++;
+    if (todTargetedItems && todTargetedItems.length) {
+      row = subTitle(ws, row, 'Targeted / specific items (§5)');
+      if (todTargetCriteria) row = kvRow(ws, row, 'Criteria', todTargetCriteria, 4);
+      row = dataTable(ws, row, ['ID', 'Description', 'Value', 'Justification'],
+        todTargetedItems.map(p => [p.id, p.desc, p.value, p.justification]), 4, 2);
+    }
+    if (r.selection && r.selection.combined) {
+      row = subTitle(ws, row, 'Items to test');
+      row = kvRow(ws, row, 'Selection trace', r.selection.traceLine, 4);
+      row = dataTable(ws, row, ['ID', 'Description', 'Value', 'Selection type'],
+        r.selection.combined.map(p => [p.id, p.desc, p.value != null ? p.value : null, p.selType]), 4, 2);
+    }
+    const docOut = document.getElementById('tod-doc-out');
+    if (docOut && docOut.dataset.text) {
+      row = subTitle(ws, row, 'Documentation (§8)');
+      row = preBlock(ws, row, docOut.dataset.text, 4);
+    }
+    ws.views = [{ state: 'frozen', ySplit: 2 }];
+  }
+
+  // ============ ToC sheet ============
+  if (hasToc) {
+    const ws = wb.addWorksheet('ToC');
+    ws.columns = [{ width: 20 }, { width: 38 }, { width: 22 }];
+    let row = brandHeader(ws, 3);
+    row = titleBlock(ws, row, 3);
+    const r = lastTocResult;
+    const label = document.getElementById('toc-label').value;
+    row = sectionTitle(ws, row, 'Test of Controls' + (label ? ' — ' + label : ''), 3);
+    row = kvRow(ws, row, 'Control', r.label, 3);
+    row = kvRow(ws, row, 'Minimum sample size', r.min + ' items', 3);
+    row++;
+    if (r.conclusion) {
+      row = kvRow(ws, row, 'Conclusion', r.conclusion, 3);
+      row = kvRow(ws, row, 'Initial sample failures', r.failures, 3);
+      if (r.extensionAdd) {
+        row = kvRow(ws, row, 'Extension', r.extensionAdd, 3);
+        row = kvRow(ws, row, 'Extension failures', r.failures2, 3);
+      }
+      row++;
+    }
+    if (r.selection && r.selection.items) {
+      row = subTitle(ws, row, 'Items to test');
+      row = kvRow(ws, row, 'Selection trace', r.selection.traceLine, 3);
+      row = dataTable(ws, row, ['ID / Date', 'Description', 'Selection type'],
+        r.selection.items.map(p => [p.id, p.desc, p.selType]), 3, -1);
+    }
+    const docOut = document.getElementById('toc-doc-out');
+    if (docOut && docOut.dataset.text) {
+      row = subTitle(ws, row, 'Documentation (§8)');
+      row = preBlock(ws, row, docOut.dataset.text, 3);
+    }
+    ws.views = [{ state: 'frozen', ySplit: 2 }];
+  }
+
+  // ============ Documentation Log sheet ============
+  if (entries.length) {
+    const ws = wb.addWorksheet('Documentation Log');
+    ws.columns = [{ width: 28 }, { width: 20 }, { width: 90 }];
+    let row = brandHeader(ws, 3);
+    row = titleBlock(ws, row, 3);
+    row = sectionTitle(ws, row, 'Documentation Log', 3);
+    ['Label', 'Date', 'Documentation'].forEach((h, i) => {
+      const c = ws.getCell(row, i + 1);
+      c.value = h;
+      c.font = { name: 'Arial', size: 9.5, bold: true, color: { argb: GREEN_TEXT } };
+      c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: GREEN_SOFT } };
+    });
+    row++;
+    entries.forEach(e => {
+      const lines = e.text.split('\n').filter(l => l.trim());
+      lines.forEach((line, i) => {
+        ws.getCell(row, 1).value = i === 0 ? e.label : '';
+        ws.getCell(row, 2).value = i === 0 ? new Date(e.ts).toLocaleString('en-US') : '';
+        const c3 = ws.getCell(row, 3);
+        c3.value = line;
+        c3.font = { name: 'Courier New', size: 9 };
+        if (i === 0) {
+          ws.getCell(row, 1).font = { name: 'Arial', size: 9.5, bold: true };
+        }
+        row++;
+      });
+      row++;
+    });
+  }
+
+  const buf = await wb.xlsx.writeBuffer();
+  const blob = new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'Sampling_Test_Working_Paper.xlsx';
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+
+  exportStatus.style.color = 'var(--green)';
+  exportStatus.textContent = 'Sampling_Test_Working_Paper.xlsx downloaded — check your browser\'s downloads.';
+}
+
+  document.getElementById('log-xlsx-btn').addEventListener('click', () => generateExcelReport());
+
+  document.getElementById('log-clear-btn').addEventListener('click', () => {
+    if (confirm('Clear the entire documentation log?')) { writeLog([]); renderLog(); }
+  });
+
+  renderLog();
+})();
+</script>
+</body>
+</html>
