@@ -422,7 +422,17 @@
       <p class="hint">This section needs a population file. To calculate the sample size only, you can ignore it.</p>
       <div class="notebox" id="tod-haphazard-note" role="note" hidden>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;margin-top:2px;"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
-        <span><b>Haphazard selection — the tool does not select the items.</b> According to the sampling guidance (§7.9 d), a haphazard sample is a non-statistical method in which the auditor tries to approximate a random selection by choosing items without any conscious bias, that is, without any special reason for including or omitting an item. The sample size comes from Appendix 5. Select the items yourself, outside the tool. The tool's own selections (Random, Systematic, Monetary Unit Sampling) are statistical and use Appendix 4: to let the tool select the items, go back to section 3 and choose Statistical / MUS (Appx. 4).</span>
+        <span><b>Haphazard selection — the tool does not select the items.</b> According to the sampling guidance (§7.9 d), a haphazard sample is a non-statistical method in which the auditor tries to approximate a random selection by choosing items without any conscious bias, that is, without any special reason for including or omitting an item. The sample size comes from Appendix 5. Select the items yourself, outside the tool, then list them in the box below: the tool checks them against the population file and adds them, with the targeted items, to the list of items to test. The tool's own selections (Random, Systematic, Monetary Unit Sampling) are statistical and use Appendix 4: to let the tool select the items, go back to section 3 and choose Statistical / MUS (Appx. 4).</span>
+      </div>
+
+      <div id="tod-hap-box" hidden>
+        <label for="tod-hap-items">Items you selected (haphazard) — one per line, with the details needed to find each one in the population (reference, invoice no., description, amount…)</label>
+        <textarea id="tod-hap-items" placeholder="JE-20418&#10;JE-20977"></textarea>
+        <label for="tod-hap-unpred-items" id="tod-hap-unpred-label" hidden>Unpredictability items you selected — one per line</label>
+        <textarea id="tod-hap-unpred-items" hidden placeholder="JE-20530"></textarea>
+        <div class="hint" id="tod-hap-count-hint"></div>
+        <div class="hint">Same format as the targeted items (details separated by | or a tab). The tool does not select anything: it only checks that each item exists in the population file, is listed once, and is not one of the targeted items. Do not list the targeted items here: they are added automatically.</div>
+        <button class="action" id="tod-hap-btn">Check my items and list them</button>
       </div>
 
       <label>Columns kept in the output — taken from the population file</label>
@@ -1635,6 +1645,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     $('tod-haphazard-note').hidden = !(hap && S.pop);
     $('tod-select-btn').disabled = hap;
     document.querySelectorAll('input[name=tod-sel-method]').forEach(r => { r.disabled = hap; });
+    updateHapBox();
   }
   function updateLocks() {
     const base = popBase();
@@ -1854,7 +1865,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   function onRetainedChanged() {
     updateManualTotal();
     validateRetained();
-    if (S.sel) clearSelectionOutputs('Size or unpredictability changed — generate the sample again.'); else clearDoc();
+    updateHapBox();
+    if (S.sel) clearSelectionOutputs(lastTodResult && lastTodResult.method === 'haphazard' ? 'Size or unpredictability changed — check your items again.' : 'Size or unpredictability changed — generate the sample again.'); else clearDoc();
   }
 
   $('tod-calc-btn').addEventListener('click', () => {
@@ -2029,6 +2041,75 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       <div class="hint" style="margin-top:.6rem;">${esc(sel.traceLine)}</div>
       <div class="tablewrap"><table class="sel"><tr>${th}</tr>${tr}</table></div>`;
   }
+
+  // ---- haphazard: the auditor selects OUTSIDE the tool; the tool only checks the list against the population file ----
+  function hapLines(id) { return $(id).value.split(/\r\n|\n|\r/).map(l => l.trim()).filter(Boolean); }
+  function updateHapBox() {
+    const r = lastTodResult;
+    const show = !!(r && r.method === 'haphazard' && S.pop);
+    $('tod-hap-box').hidden = !show;
+    if (!show) return;
+    const nEl = $('tod-final-n'), uEl = $('tod-unpred');
+    const n = nEl ? parseInt(nEl.value, 10) : NaN;
+    const u = uEl && uEl.value !== '' ? parseInt(uEl.value, 10) : 0;
+    const showU = Number.isInteger(u) && u > 0;
+    $('tod-hap-unpred-label').hidden = !showU; $('tod-hap-unpred-items').hidden = !showU;
+    $('tod-hap-count-hint').textContent = 'Expected: ' + (Number.isInteger(n) ? n : '?') + ' item(s) in the first box' + (showU ? ' and ' + u + ' in the second one.' : '.');
+  }
+  ['tod-hap-items', 'tod-hap-unpred-items'].forEach(id => $(id).addEventListener('input', () => {
+    if (S.sel && S.sel.method === 'haphazard') clearSelectionOutputs('Your list changed — check your items again.');
+  }));
+  $('tod-hap-btn').addEventListener('click', () => {
+    const out = $('tod-selection-out'); const r = lastTodResult;
+    if (!r || !S.pop || r.method !== 'haphazard') return;
+    const fail = msgs => {
+      clearSelectionOutputs('');
+      const list = (Array.isArray(msgs) ? msgs : [msgs]);
+      const shown = list.slice(0, 15).map(m => `<div>${ICON.err} ${esc(m)}</div>`).join('') + (list.length > 15 ? `<div>… and ${list.length - 15} more.</div>` : '');
+      out.innerHTML = `<div class="errbox">${shown}</div>`;
+    };
+    const n = parseInt($('tod-final-n').value, 10);
+    const reason = $('tod-reason').value.trim();
+    const u = $('tod-unpred').value === '' ? 0 : parseInt($('tod-unpred').value, 10);
+    const rem = remaining();
+    if (!Number.isInteger(n) || n < 1) return fail('Enter a size retained of at least 1.');
+    if (n < r.nLow) return fail(`The size retained cannot be below ${r.nLow}, the low end of the range.`);
+    if (n < r.suggested && !reason) return fail(`The size retained (${n}) is below the suggested size (${r.suggested}): enter the reason.`);
+    if (!Number.isInteger(u) || u < 0) return fail('Unpredictability items must be a whole number (0 or more).');
+    if (n + u > rem.count) return fail(`The sample (${n}) plus the unpredictability items (${u}) exceeds the remaining population (${fmt(rem.count)} items).`);
+
+    const listS = hapLines('tod-hap-items'), listU = u > 0 ? hapLines('tod-hap-unpred-items') : [];
+    const errs = [];
+    if (listS.length !== n) errs.push(`The first box has ${listS.length} item(s) but the size retained is ${n}.`);
+    if (u > 0 && listU.length !== u) errs.push(`The unpredictability box has ${listU.length} item(s) but ${u} are expected.`);
+    const all = listS.map((t, i) => ({ t, kind: 'sample', no: i + 1 })).concat(listU.map((t, i) => ({ t, kind: 'unpred', no: i + 1 })));
+    const seen = new Map(), idxS = [], idxU = [];
+    all.forEach(L => {
+      const where = (L.kind === 'sample' ? 'Line ' : 'Unpredictability line ') + L.no;
+      const tokens = splitTargetLine(L.t);
+      const sets = tokens.map(candidates).sort((a, b) => a.size - b.size);
+      const cands = sets.length ? Array.from(sets[0]).filter(i => sets.every(s => s.has(i))) : [];
+      if (cands.length === 0) { errs.push(`${where}: no matching line in the population (“${L.t}”).`); return; }
+      if (cands.length > 1) { errs.push(`${where}: matches ${cands.length} lines of the population — add details to identify a single one (“${L.t}”).`); return; }
+      const idx = cands[0];
+      if (rem.tset.has(idx)) { errs.push(`${where}: row ${fmt(S.pop.rows[idx].row)} is a targeted item, already tested at 100% — do not list it here.`); return; }
+      if (seen.has(idx)) { errs.push(`${where}: row ${fmt(S.pop.rows[idx].row)} is already listed (${seen.get(idx)}).`); return; }
+      seen.set(idx, where); (L.kind === 'sample' ? idxS : idxU).push(idx);
+    });
+    if (errs.length) return fail(errs);
+
+    const items = [
+      ...(S.tgt ? S.tgt.list : []).map(idx => ({ idx, type: 'targeted', label: 'Targeted testing (100%)' })),
+      ...idxS.map(idx => ({ idx, type: 'sample', label: 'Haphazard selection (auditor)' })),
+      ...idxU.map(idx => ({ idx, type: 'unpred', label: 'Unpredictability (auditor)' })),
+    ];
+    const traceLine = `Haphazard selection by the auditor, without conscious bias, performed outside the tool (§7.9(d)): ${n} items${u ? ' + ' + u + ' unpredictability items' : ''} listed by the auditor and checked by the tool against ${S.pop.file} — all found in the population, none listed twice, none among the targeted items.`;
+    r.retained = n; r.reason = reason; r.unpred = u;
+    S.sel = { method: 'haphazard', methodLabel: 'Haphazard selection (auditor)', requested: n, traceLine, items, rem };
+    clearDoc();
+    renderSelection();
+    setOutputButtons(true);
+  });
 
   // ---- documentation ----
   function buildDocText() {
